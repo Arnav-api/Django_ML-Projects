@@ -3,6 +3,7 @@ services:
     name: cnn-capstone
     env: python
     plan: free
+    rootDir: Cnn
+    pythonVersion: 3.10.12
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn Cnn.wsgi:application
-
