@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: cnn-capstone
+    env: python
+    plan: free
+    buildCommand: pip install -r Cnn/requirements.txt
+    startCommand: cd Cnn && gunicorn Cnn.wsgi:application
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.12
