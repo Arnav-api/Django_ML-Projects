@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: django-cnn-capstone
+    env: python
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    startCommand: |
+      python manage.py migrate
+      gunicorn Django_ML_Projects.wsgi:application
+    plan: free
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: Django_ML_Projects.settings
