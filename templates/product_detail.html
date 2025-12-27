@@ -1,0 +1,6 @@
+<h2>{{ p.category }}</h2>
+<img src="{{ p.detected_image.url|default:p.original_image.url }}" width="400">
+<p><strong>Price:</strong> ₹{{ p.price }}</p>
+<p><strong>Seller:</strong> {{ p.seller_name }}</p>
+<p><strong>Phone:</strong> {{ p.country_code }} {{ p.mobile }}</p>
+<p><strong>Description:</strong> {{ p.description }}</p>

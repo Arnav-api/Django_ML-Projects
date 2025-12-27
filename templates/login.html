@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card shadow-sm" style="width: 100%; max-width: 400px;">
+        <div class="card-body p-4">
+
+            <h3 class="text-center mb-3">Welcome Back</h3>
+            <p class="text-muted text-center mb-4">
+                Login to continue
+            </p>
+
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    Invalid username or password.
+                </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    {{ form.username }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    {{ form.password }}
+                </div>
+
+                <button class="btn btn-dark w-100 mb-3">
+                    Login
+                </button>
+            </form>
+
+            <!-- 🔙 Back Button -->
+            <a href="/ecommerce/" class="btn btn-outline-secondary w-100 mb-2">
+                ← Back to Store
+            </a>
+
+            <div class="text-center mt-2">
+                <small class="text-muted">
+                    Don’t have an account?
+                    <a href="{% url 'signup' %}">Sign Up</a>
+                </small>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+

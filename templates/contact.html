@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+          crossorigin="anonymous">
+
+    <title>Contact Us</title>
+</head>
+<body>
+    <span class="d-block p-2 bg-dark text-white">
+        <strong>Welcome — Fill the feedback form below and we will reach out to you</strong>
+    </span><br>
+
+    <form action = "/response" onsubmit="return validateForm()">
+        <!-- Username -->
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">User Name</span>
+            <input type="text" name = "Username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
+        </div>
+
+        <!-- Email -->
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Customer Email Id</span>
+            <input type="email" name = "email" class="form-control" placeholder="Enter your email" aria-label="Email" aria-describedby="basic-addon1" id="emailInput" required>
+        </div>
+
+        <!-- Phone -->
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">+91</span>
+            <input type="tel" name = "number" class="form-control" placeholder="Enter phone number" aria-label="Phone number" aria-describedby="basic-addon1" id="phoneInput" pattern="[6-9]{1}[0-9]{9}" maxlength="10" required>
+        </div>
+
+        <!-- Feedback -->
+        <div class="input-group">
+            <span class="input-group-text">Feedback</span>
+            <textarea class="form-control" name="feedback" aria-label="With textarea" required></textarea>
+        </div>
+        <br>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <script>
+        function validateForm() {
+            let email = document.getElementById("emailInput").value;
+            let phone = document.getElementById("phoneInput").value;
+
+            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            let phoneRegex = /^[6-9]\d{9}$/;
+
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address!");
+                return false;
+            }
+
+            if (!phoneRegex.test(phone)) {
+                alert("Please enter a valid 10-digit Indian phone number!");
+                return false;
+            }
+
+            alert("Form submitted successfully!");
+            return true; // allow submission
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+            crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Feedback Received</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="feedbackModalLabel">Thank You!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Hello <strong>{{ Name }}</strong>,</p>
+        <p>We have received your feedback:</p>
+        <blockquote>{{ Feedback }}</blockquote>
+        <p>We will reach out to you at <strong>{{ Email }}</strong> or +91 {{ Number }} soon.</p>
+      </div>
+      <div class="modal-footer">
+        <button 
+    type="button" 
+    class="btn btn-success" 
+    data-bs-dismiss="modal" 
+    onclick="window.location.href='/'">
+    OK
+</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Show modal automatically when page loads
+    window.onload = function() {
+        var myModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
+        myModal.show();
+    };
+</script>
+
+</body>
+</html>
