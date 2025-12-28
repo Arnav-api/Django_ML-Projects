@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-t@379mq+u)q1fhp3em&9(w9^5je_m**clu0$0=g4vf!@zcg_on
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["django-ml-projects-6.onrender.com","django-ml-projects-7.onrender.com","django-ml-projects-8.onrender.com"]
+ALLOWED_HOSTS = ["django-ml-projects-6.onrender.com","django-ml-projects-7.onrender.com","django-ml-projects-8.onrender.com","django-ml-projects-9.onrender.com","django-ml-projects-10.onrender.com"]
 
 
 # Application definition
