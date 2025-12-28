@@ -61,6 +61,92 @@ def selling(request):
 
     return render(request, "selling.html")
 
+def object_classification(request):
+    import os
+    import uuid
+    import cv2
+    from ultralytics import YOLO
+    from django.conf import settings
+    from django.shortcuts import render
+
+    if request.method != "POST":
+        return render(request, "classification.html")
+
+    uploaded_image = request.FILES.get("image")
+    username = request.POST.get("userid", "User")
+
+    if not uploaded_image:
+        return render(request, "classification_result.html", {
+            "error": "No image uploaded"
+        })
+
+    # ---------- Save uploaded image ----------
+    input_dir = os.path.join(settings.MEDIA_ROOT, "uploads")
+    os.makedirs(input_dir, exist_ok=True)
+
+    input_name = f"{uuid.uuid4().hex}.jpg"
+    input_path = os.path.join(input_dir, input_name)
+
+    with open(input_path, "wb+") as f:
+        for chunk in uploaded_image.chunks():
+            f.write(chunk)
+
+    img = cv2.imread(input_path)
+
+    # ---------- Load YOLO model ----------
+    model = YOLO(os.path.join(settings.BASE_DIR, "models", "last.pt"))
+
+    results = model.predict(input_path, conf=0.15, save=False)
+    result = results[0]
+
+    DAMAGE_CLASSES = {
+        "damaged_phone",
+        "damaged_phones",
+        "damaged_tablet",
+        "damaged_laptop",
+        "damaged_camera",
+        "damaged_region",
+    }
+
+    detected = False
+
+    if result.boxes is not None:
+        for box, cls_id, conf in zip(
+            result.boxes.xyxy,
+            result.boxes.cls,
+            result.boxes.conf
+        ):
+            class_name = model.names[int(cls_id)].lower()
+            confidence = float(conf)
+
+            if class_name in DAMAGE_CLASSES and confidence > 0.15:
+                detected = True
+                x1, y1, x2, y2 = map(int, box)
+
+                cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 0), 2)
+                cv2.putText(
+                    img,
+                    f"Damaged Region {confidence:.2f}",
+                    (x1, y1 - 10),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.6,
+                    (255, 0, 0),
+                    2
+                )
+
+    # ---------- Save output ----------
+    output_dir = os.path.join(settings.MEDIA_ROOT, "detections")
+    os.makedirs(output_dir, exist_ok=True)
+
+    output_name = f"detected_{uuid.uuid4().hex}.jpg"
+    output_path = os.path.join(output_dir, output_name)
+    cv2.imwrite(output_path, img)
+
+    return render(request, "classification_result.html", {
+        "username": username,
+        "detected": detected,
+        "image_url": f"{settings.MEDIA_URL}detections/{output_name}"
+    })
 
 from ultralytics import YOLO
 import shutil, os
